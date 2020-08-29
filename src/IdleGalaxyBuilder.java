@@ -1,4 +1,4 @@
-import java.math.BigDecimal;
+import org.apfloat.*;
 
 import java.io.*;
 import java.util.*;
@@ -34,7 +34,8 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
     public IdleGalaxyBuilder() {
         // Load saved game data if it exists
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("Saved Idle Galaxy Builder.txt"));
+            FileInputStream fileInputStream = new FileInputStream("Saved Idle Galaxy Builder.txt");
+            ObjectInputStream in = new ObjectInputStream(fileInputStream);
             savedData = (SavedData) in.readObject();
             in.close();
 
@@ -44,10 +45,10 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
             long differenceInSeconds = (long) (difference / 1000.0);
 
             // Give offline rewards to the player
-            BigDecimal toAdd = new BigDecimal("0");
+            Apfloat toAdd = new Apfloat("0");
             for (IdleGalaxyBuilder.Planet planet : savedData.planets){
-                if (planet.getLevel().compareTo(new BigDecimal("0")) > 0) {
-                    toAdd.add(planet.getEnergyProductionRate().multiply(new BigDecimal(differenceInSeconds)));
+                if (planet.getLevel().compareTo(new Apfloat("0")) > 0) {
+                    toAdd.add(planet.getEnergyProductionRate().multiply(new Apfloat(differenceInSeconds)));
                 }
             }
 
@@ -62,67 +63,67 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
         container = getContentPane();
         container.setLayout(new GridLayout(7, 1));
 
-        Planet Lelvaetov = new Planet("Lelvaetov", new BigDecimal("0"), new BigDecimal("1"), new BigDecimal("1e2"));
+        Planet Lelvaetov = new Planet("Lelvaetov", new Apfloat("0"), new Apfloat("1"), new Apfloat("1e2"));
         planets.add(Lelvaetov);
 
-        Planet Rebos = new Planet("Rebos", new BigDecimal("0"), new BigDecimal("1e2"), new BigDecimal("1e4"));
+        Planet Rebos = new Planet("Rebos", new Apfloat("0"), new Apfloat("1e2"), new Apfloat("1e4"));
         planets.add(Rebos);
 
-        Planet Hunides = new Planet("Hunides", new BigDecimal("0"), new BigDecimal("1e4"), new BigDecimal("1e7"));
+        Planet Hunides = new Planet("Hunides", new Apfloat("0"), new Apfloat("1e4"), new Apfloat("1e7"));
         planets.add(Hunides);
 
-        Planet Lloinerth = new Planet("Lloinerth", new BigDecimal("0"), new BigDecimal("1e7"), new BigDecimal("1e11"));
+        Planet Lloinerth = new Planet("Lloinerth", new Apfloat("0"), new Apfloat("1e7"), new Apfloat("1e11"));
         planets.add(Lloinerth);
 
-        Planet Bameliv = new Planet("Bameliv", new BigDecimal("0"), new BigDecimal("1e11"), new BigDecimal("1e16"));
+        Planet Bameliv = new Planet("Bameliv", new Apfloat("0"), new Apfloat("1e11"), new Apfloat("1e16"));
         planets.add(Bameliv);
 
-        Planet Nalmeuhiri = new Planet("Nalmeuhiri", new BigDecimal("0"), new BigDecimal("1e16"), new BigDecimal("1e22"));
+        Planet Nalmeuhiri = new Planet("Nalmeuhiri", new Apfloat("0"), new Apfloat("1e16"), new Apfloat("1e22"));
         planets.add(Nalmeuhiri);
 
-        Planet Elvayama = new Planet("Elvayama", new BigDecimal("0"), new BigDecimal("1e22"), new BigDecimal("1e29"));
+        Planet Elvayama = new Planet("Elvayama", new Apfloat("0"), new Apfloat("1e22"), new Apfloat("1e29"));
         planets.add(Elvayama);
 
-        Planet Colnora = new Planet("Colnora", new BigDecimal("0"), new BigDecimal("1e29"), new BigDecimal("1e37"));
+        Planet Colnora = new Planet("Colnora", new Apfloat("0"), new Apfloat("1e29"), new Apfloat("1e37"));
         planets.add(Colnora);
 
-        Planet Acryria = new Planet("Acryria", new BigDecimal("0"), new BigDecimal("1e37"), new BigDecimal("1e46"));
+        Planet Acryria = new Planet("Acryria", new Apfloat("0"), new Apfloat("1e37"), new Apfloat("1e46"));
         planets.add(Acryria);
 
-        Planet Maogantu = new Planet("Maogantu", new BigDecimal("0"), new BigDecimal("1e46"), new BigDecimal("1e56"));
+        Planet Maogantu = new Planet("Maogantu", new Apfloat("0"), new Apfloat("1e46"), new Apfloat("1e56"));
         planets.add(Maogantu);
 
-        Planet Semia = new Planet("Semia", new BigDecimal("0"), new BigDecimal("1e56"), new BigDecimal("1e67"));
+        Planet Semia = new Planet("Semia", new Apfloat("0"), new Apfloat("1e56"), new Apfloat("1e67"));
         planets.add(Semia);
 
-        Planet Lloemia = new Planet("Lloemia", new BigDecimal("0"), new BigDecimal("1e67"), new BigDecimal("1e79"));
+        Planet Lloemia = new Planet("Lloemia", new Apfloat("0"), new Apfloat("1e67"), new Apfloat("1e79"));
         planets.add(Lloemia);
 
-        Planet Zagatov = new Planet("Zagatov", new BigDecimal("0"), new BigDecimal("1e79"), new BigDecimal("1e92"));
+        Planet Zagatov = new Planet("Zagatov", new Apfloat("0"), new Apfloat("1e79"), new Apfloat("1e92"));
         planets.add(Zagatov);
 
-        Planet Ninriavis = new Planet("Ninriavis", new BigDecimal("0"), new BigDecimal("1e92"), new BigDecimal("1e106"));
+        Planet Ninriavis = new Planet("Ninriavis", new Apfloat("0"), new Apfloat("1e92"), new Apfloat("1e106"));
         planets.add(Ninriavis);
 
-        Planet Invuiturn = new Planet("Invuiturn", new BigDecimal("0"), new BigDecimal("1e106"), new BigDecimal("1e121"));
+        Planet Invuiturn = new Planet("Invuiturn", new Apfloat("0"), new Apfloat("1e106"), new Apfloat("1e121"));
         planets.add(Invuiturn);
 
-        Planet Tociuq = new Planet("Tociuq", new BigDecimal("0"), new BigDecimal("1e121"), new BigDecimal("1e137"));
+        Planet Tociuq = new Planet("Tociuq", new Apfloat("0"), new Apfloat("1e121"), new Apfloat("1e137"));
         planets.add(Tociuq);
 
-        Planet Odides = new Planet("Odides", new BigDecimal("0"), new BigDecimal("1e137"), new BigDecimal("1e154"));
+        Planet Odides = new Planet("Odides", new Apfloat("0"), new Apfloat("1e137"), new Apfloat("1e154"));
         planets.add(Odides);
 
-        Planet Oacury = new Planet("Oacury", new BigDecimal("0"), new BigDecimal("1e154"), new BigDecimal("1e172"));
+        Planet Oacury = new Planet("Oacury", new Apfloat("0"), new Apfloat("1e154"), new Apfloat("1e172"));
         planets.add(Oacury);
 
-        Planet Chualiv = new Planet("Chualiv", new BigDecimal("0"), new BigDecimal("1e172"), new BigDecimal("1e191"));
+        Planet Chualiv = new Planet("Chualiv", new Apfloat("0"), new Apfloat("1e172"), new Apfloat("1e191"));
         planets.add(Chualiv);
 
-        Planet Strunenope = new Planet("Strunenope", new BigDecimal("0"), new BigDecimal("1e191"), new BigDecimal("1e211"));
+        Planet Strunenope = new Planet("Strunenope", new Apfloat("0"), new Apfloat("1e191"), new Apfloat("1e211"));
         planets.add(Strunenope);
 
-        Planet Xotriahiri = new Planet("Xotriahiri", new BigDecimal("0"), new BigDecimal("1e211"), new BigDecimal("1e232"));
+        Planet Xotriahiri = new Planet("Xotriahiri", new Apfloat("0"), new Apfloat("1e211"), new Apfloat("1e232"));
         planets.add(Xotriahiri);
 
         savedData.planets = planets;
@@ -149,9 +150,9 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
             private void increaseClicker(){
                 // if SavedData.player.energy >= clickerPrice
                 if (savedData.player.energy.compareTo(savedData.clickerPrice) >= 0){
-                    savedData.clicker = savedData.clicker.add(new BigDecimal(1));
+                    savedData.clicker = savedData.clicker.add(new Apfloat(1));
                     savedData.player.energy = savedData.player.energy.subtract(savedData.clickerPrice);
-                    savedData.clickerPrice = savedData.clickerPrice.multiply(new BigDecimal(2));
+                    savedData.clickerPrice = savedData.clickerPrice.multiply(new Apfloat(2));
                     JOptionPane.showMessageDialog(null, "You have improved your clicker!");
                 }
                 else{
@@ -177,12 +178,12 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
                 for (int i = 0; i < savedData.planets.size(); i++){
                     Planet currPlanet = savedData.planets.get(i);
                     if (i == 0){
-                        if (!currPlanet.unlocked && savedData.clicker.compareTo(new BigDecimal("2")) > 0) {
+                        if (!currPlanet.unlocked && savedData.clicker.compareTo(new Apfloat("2")) > 0) {
                             currPlanet.unlock();
                         }
                     }
                     else{
-                        if (!currPlanet.unlocked && savedData.planets.get(i - 1).level.compareTo(new BigDecimal("2")) > 0){
+                        if (!currPlanet.unlocked && savedData.planets.get(i - 1).level.compareTo(new Apfloat("2")) > 0){
                             currPlanet.unlock();
                         }
                     }
@@ -196,7 +197,7 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
         produceWithPlanets.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 for (Planet planet : savedData.planets){
-                    if (planet.level.compareTo(new BigDecimal("0")) > 0) {
+                    if (planet.level.compareTo(new Apfloat("0")) > 0) {
                         savedData.player.energy = savedData.player.energy.add(planet.energyProductionRate);
                     }
                 }
@@ -210,7 +211,8 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
             public void actionPerformed(ActionEvent e) {
                 try {
                     savedData.saveTime = System.currentTimeMillis();
-                    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Saved Idle Galaxy Builder.txt"));
+                    FileOutputStream fileOutputStream = new FileOutputStream("Saved Idle Galaxy Builder.txt");
+                    ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
                     out.writeObject(savedData);
                     out.close();
                 } catch (IOException ioException) {
@@ -228,16 +230,16 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
         container.add(saveGameButton);
     }
 
-    public class Planet {
+    public class Planet implements Serializable {
         /**
          * This class contains attributes of an affordable planet
          * */
 
         // Non graphical variables
         private final String name;
-        private BigDecimal level;
-        private BigDecimal energyProductionRate; // amount of energy produced per second
-        private BigDecimal energyCost;
+        private Apfloat level;
+        private Apfloat energyProductionRate; // amount of energy produced per second
+        private Apfloat energyCost;
         private boolean unlocked = false;
 
         // Graphical variables
@@ -245,7 +247,7 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
         JButton button;
 
         // Constructor
-        public Planet(String name, BigDecimal level, BigDecimal energyProductionRate, BigDecimal energyCost){
+        public Planet(String name, Apfloat level, Apfloat energyProductionRate, Apfloat energyCost){
             // Non graphical variables
             this.name = name;
             this.level = level;
@@ -272,11 +274,11 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
             return res;
         }
 
-        public BigDecimal getEnergyProductionRate() {
+        public Apfloat getEnergyProductionRate() {
             return energyProductionRate;
         }
 
-        public BigDecimal getLevel() {
+        public Apfloat getLevel() {
             return level;
         }
 
@@ -294,12 +296,12 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
         public void improve(){
             // if SavedData.player.energy >= energyCost
             if (savedData.player.energy.compareTo(energyCost) >= 0){
-                level = level.add(new BigDecimal(1));
+                level = level.add(new Apfloat(1));
                 savedData.player.energy = savedData.player.energy.subtract(energyCost);
-                if (level.compareTo(new BigDecimal("1")) > 0) {
-                    energyProductionRate = energyProductionRate.multiply(new BigDecimal("2"));
+                if (level.compareTo(new Apfloat("1")) > 0) {
+                    energyProductionRate = energyProductionRate.multiply(new Apfloat("2"));
                 }
-                energyCost = energyCost.multiply(new BigDecimal("2"));
+                energyCost = energyCost.multiply(new Apfloat("2"));
                 JOptionPane.showMessageDialog(null, "You have improved " + name + "!");
             }
             else{

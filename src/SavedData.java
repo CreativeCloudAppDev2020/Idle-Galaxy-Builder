@@ -1,4 +1,4 @@
-import java.math.BigDecimal;
+import org.apfloat.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ public class SavedData implements Serializable {
 
     public Player player;
     public ArrayList<IdleGalaxyBuilder.Planet> planets = new ArrayList<>();
-    public BigDecimal clicker = new BigDecimal("1");
-    public BigDecimal clickerPrice = new BigDecimal("20");
+    public Apfloat clicker = new Apfloat("1");
+    public Apfloat clickerPrice = new Apfloat("20");
     public long saveTime = System.currentTimeMillis();
 
     public String toString(){

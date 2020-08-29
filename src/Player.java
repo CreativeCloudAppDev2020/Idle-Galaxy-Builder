@@ -1,4 +1,4 @@
-import java.math.BigDecimal;
+import org.apfloat.Apfloat;
 
 import java.io.Serializable;
 
@@ -7,10 +7,10 @@ public class Player implements Serializable {
      * This class contains attributes of the player in this game.
      * */
 
-    public BigDecimal energy;
+    public Apfloat energy;
 
     public Player(){
-        energy = new BigDecimal("0");
+        energy = new Apfloat("0");
     }
 
     @Override
