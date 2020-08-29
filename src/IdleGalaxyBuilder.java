@@ -32,34 +32,6 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
     ArrayList<Planet> planets = new ArrayList<>();
 
     public IdleGalaxyBuilder() {
-        // Load saved game data if it exists
-        try {
-            FileInputStream fileInputStream = new FileInputStream("Saved Idle Galaxy Builder.txt");
-            ObjectInputStream in = new ObjectInputStream(fileInputStream);
-            savedData = (SavedData) in.readObject();
-            in.close();
-
-            // Getting the time now
-            long now = System.currentTimeMillis();
-            long difference = now - savedData.saveTime;
-            long differenceInSeconds = (long) (difference / 1000.0);
-
-            // Give offline rewards to the player
-            Apfloat toAdd = new Apfloat("0");
-            for (IdleGalaxyBuilder.Planet planet : savedData.planets){
-                if (planet.getLevel().compareTo(new Apfloat("0")) > 0) {
-                    toAdd.add(planet.getEnergyProductionRate().multiply(new Apfloat(differenceInSeconds)));
-                }
-            }
-
-            savedData.player.energy = savedData.player.energy.add(toAdd);
-        }
-        catch (IOException | ClassNotFoundException ioException) {
-            // Creating new game data
-            savedData = new SavedData();
-            savedData.player = new Player();
-        }
-
         container = getContentPane();
         container.setLayout(new GridLayout(7, 1));
 
@@ -126,7 +98,38 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
         Planet Xotriahiri = new Planet("Xotriahiri", new Apfloat("0"), new Apfloat("1e211"), new Apfloat("1e232"));
         planets.add(Xotriahiri);
 
-        savedData.planets = planets;
+        // Load saved game data if it exists
+        try {
+            FileInputStream fileInputStream = new FileInputStream("Saved Idle Galaxy Builder.txt");
+            ObjectInputStream in = new ObjectInputStream(fileInputStream);
+            savedData = (SavedData) in.readObject();
+            in.close();
+            fileInputStream.close();
+
+            // Getting the time now
+            long now = System.currentTimeMillis();
+            long difference = now - savedData.saveTime;
+            long differenceInSeconds = (long) (difference / 1000.0);
+
+            // Give offline rewards to the player
+            Apfloat toAdd = new Apfloat("0");
+            for (IdleGalaxyBuilder.Planet planet : savedData.planets){
+                if (planet.getLevel().compareTo(new Apfloat("0")) > 0) {
+                    toAdd.add(planet.getEnergyProductionRate().multiply(new Apfloat(differenceInSeconds)));
+                    planet.unlock();
+                }
+            }
+
+            savedData.player.energy = savedData.player.energy.add(toAdd);
+            JOptionPane.showMessageDialog(null, "You have gained " + toAdd + " energy for being " +
+                    "offline for " + differenceInSeconds + " seconds!");
+        }
+        catch (IOException | ClassNotFoundException ioException) {
+            // Creating new game data
+            savedData = new SavedData();
+            savedData.player = new Player();
+            savedData.planets = planets;
+        }
 
         // Produce energy by hand
         energyLabel = new JLabel("Energy: " + savedData.player.energy);
@@ -215,6 +218,7 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
                     ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
                     out.writeObject(savedData);
                     out.close();
+                    fileOutputStream.close();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
