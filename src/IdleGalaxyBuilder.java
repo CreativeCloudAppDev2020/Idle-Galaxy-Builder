@@ -116,6 +116,9 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
             for (IdleGalaxyBuilder.Planet planet : savedData.planets){
                 if (planet.getLevel().compareTo(new Apfloat("0")) > 0) {
                     toAdd.add(planet.getEnergyProductionRate().multiply(new Apfloat(differenceInSeconds)));
+                }
+
+                if (planet.unlocked){
                     planet.unlock();
                 }
             }
@@ -165,19 +168,20 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
         });
 
         // Actualize the progress
-        java.util.Timer actualizeProgress = new java.util.Timer();
-        actualizeProgress.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
+        javax.swing.Timer actualizeProgress = new javax.swing.Timer(0, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 energyLabel.setText("Energy: " + savedData.player.energy);
                 clickerLabel.setText("Clicker Level: " + savedData.clicker);
                 increaseClickerButton.setText("Improve Clicker (Energy Cost: " + savedData.clickerPrice + ")");
             }
-        }, 0, 25);
+        });
+        actualizeProgress.start();
 
         // Unlock more planets
-        java.util.Timer getMorePlanets = new java.util.Timer();
-        getMorePlanets.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
+        javax.swing.Timer getMorePlanets = new javax.swing.Timer(0, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < savedData.planets.size(); i++){
                     Planet currPlanet = savedData.planets.get(i);
                     if (i == 0){
@@ -193,19 +197,21 @@ public class IdleGalaxyBuilder extends JFrame implements Serializable {
 
                 }
             }
-        }, 0, 2000);
+        });
+        getMorePlanets.start();
 
         // Produce energy with planets
-        java.util.Timer produceWithPlanets = new java.util.Timer();
-        produceWithPlanets.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
+        javax.swing.Timer produceWithPlanets = new javax.swing.Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 for (Planet planet : savedData.planets){
                     if (planet.level.compareTo(new Apfloat("0")) > 0) {
                         savedData.player.energy = savedData.player.energy.add(planet.energyProductionRate);
                     }
                 }
             }
-        }, 0, 1000);
+        });
+        produceWithPlanets.start();
 
         // Save game data
         saveGameButton = new JButton("SAVE GAME");
